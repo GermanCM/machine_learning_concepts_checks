@@ -1,2 +1,3 @@
 # concepts_checks
-Repositorio para testear conceptos antes de implementar los correspondientes desarrollos
+
+Quick&simple concepts checks. The idea is to first test on small and easy to control datasets.
