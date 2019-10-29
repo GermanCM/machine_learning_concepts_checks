@@ -1,0 +1,22 @@
+2019-10-28 18:39:13,804 raised exception at 2019-10-28.log: plot_series_histogram() missing 1 required positional argument: 'attribute'
+Traceback (most recent call last):
+  File "main.py", line 13, in <module>
+    generic_plots_obj.plot_series_histogram()
+TypeError: plot_series_histogram() missing 1 required positional argument: 'attribute'
+2019-10-28 18:41:32,281 raised exception at 2019-10-28.log: plot_series_histogram() missing 1 required positional argument: 'attribute'
+Traceback (most recent call last):
+  File "main.py", line 13, in <module>
+    generic_plots_obj.plot_series_histogram()
+TypeError: plot_series_histogram() missing 1 required positional argument: 'attribute'
+2019-10-28 18:43:01,079 raised exception at 2019-10-28.log: plot_series_histogram() missing 1 required positional argument: 'attribute'
+Traceback (most recent call last):
+  File "main.py", line 13, in <module>
+    generic_plots_obj.plot_series_histogram()
+TypeError: plot_series_histogram() missing 1 required positional argument: 'attribute'
+2019-10-28 19:00:50,928 raised exception at 2019-10-28.log: unsupported operand type(s) for *: 'function' and 'float'
+Traceback (most recent call last):
+  File "main.py", line 16, in <module>
+    normal_data_1 = dist_generator.generate_random_normal_distribution(100, 20, 1000)
+  File "C:\Users\gcabreram\Documents\DS_validation_experiments\machine_learning_concepts_checks\project\statistical_tests\distributions_generator.py", line 16, in generate_random_normal_distribution
+    data_normal_1 = std * randn(size) + mean
+TypeError: unsupported operand type(s) for *: 'function' and 'float'
