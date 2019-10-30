@@ -1,0 +1,20 @@
+2019-10-29 16:55:39,150 raised exception at 2019-10-29.log: float() argument must be a string or a number, not 'Distributions_generator'
+Traceback (most recent call last):
+  File "<ipython-input-8-fd2cbad68b26>", line 2, in <module>
+    random_beta_data_1 = dist_generator.generate_beta_distribution(2, 3, 10000)
+  File "c:\Users\gcabreram\Documents\DS_validation_experiments\machine_learning_concepts_checks\project\statistical_tests\distributions_generator.py", line 86, in generate_beta_distribution
+    raise exc
+  File "c:\Users\gcabreram\Documents\DS_validation_experiments\machine_learning_concepts_checks\project\statistical_tests\distributions_generator.py", line 81, in generate_beta_distribution
+    data_random_beta = np.random.beta(a, b)
+  File "mtrand.pyx", line 1706, in mtrand.RandomState.beta
+TypeError: float() argument must be a string or a number, not 'Distributions_generator'
+2019-10-29 16:56:35,359 raised exception at 2019-10-29.log: float() argument must be a string or a number, not 'Distributions_generator'
+Traceback (most recent call last):
+  File "<ipython-input-9-fd2cbad68b26>", line 2, in <module>
+    random_beta_data_1 = dist_generator.generate_beta_distribution(2, 3, 10000)
+  File "c:\Users\gcabreram\Documents\DS_validation_experiments\machine_learning_concepts_checks\project\statistical_tests\distributions_generator.py", line 86, in generate_beta_distribution
+    raise exc
+  File "c:\Users\gcabreram\Documents\DS_validation_experiments\machine_learning_concepts_checks\project\statistical_tests\distributions_generator.py", line 81, in generate_beta_distribution
+    data_random_beta = np.random.beta(a, b)
+  File "mtrand.pyx", line 1706, in mtrand.RandomState.beta
+TypeError: float() argument must be a string or a number, not 'Distributions_generator'
