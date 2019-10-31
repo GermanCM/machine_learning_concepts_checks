@@ -133,11 +133,26 @@ else:
     print('Samples are correlated (reject H0) p=%.3f' % p)
 
 # %%[markdown]
-""" As another statistical test, we can check if two distributions come from the same population.
-In this case, our null hypothesis is that the 
+""" As another statistical test, we can check if two distributions come from 
+    the same population. In this case, our null hypothesis is that the two samples
+    comme from the same distribution (i.e. their mean values do not differ a significant
+    amount)"""
+# %%
+dist_generator=distributions_generator.Distributions_generator()
+normal_data_1 = dist_generator.generate_random_normal_distribution(100, 20, 1000)
+normal_data_2 = dist_generator.generate_random_normal_distribution(50, 10, 1000) + normal_data_1
+# %%[markdown]
+### We now in advance that 'normal_data_1' and 'normal_data_2' differ, so we should get a tiny p-value:
+# %%     
+from project.statistical_tests import hypothesis_tester
 
-
-
+data_diff = normal_data_1, normal_data_2
+data_equal = normal_data_2, normal_data_2
+hypothesis_tester_obj_diff = hypothesis_tester.DiffMeansPermute(data_diff)
+print('pvalue for normal_data_1, normal_data_2: ', hypothesis_tester_obj_diff.PValue())
+#%%
+hypothesis_tester_obj_equal = hypothesis_tester.DiffMeansPermute(data_equal)
+print('pvalue for normal_data_2, normal_data_2: ', hypothesis_tester_obj_equal.PValue())
 
 
 #%%
