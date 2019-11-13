@@ -25,7 +25,7 @@ scoring_metrics = ['precision', 'roc_auc']
 svc = svm.SVC(gamma="scale")
 
 clf = GridSearchCV(estimator=svc, param_grid=grid_params, cv=5, scoring=scoring_metrics, refit='roc_auc')
-clf.fit(iris_attributes, iris_target)     
+clf.fit(iris_attributes[20:88], iris_target[20:88])     
 
 #%% [markdown]
 # #### Acces to results
@@ -49,6 +49,34 @@ clf.best_estimator_
 # ### <font color='green'> Best estimator predictions </font>
 
 #%%
-test_sample=iris_attributes[-3].reshape(1, -1)
+test_sample=iris_attributes[3].reshape(1, -1)
 clf.best_estimator_.predict(test_sample)
+
+#%%[markdown]
+''' Check: 'best_estimator_' ya te devuelve el modelo 
+reentrenado en todo el set'''
+#%%
+from sklearn.metrics import roc_auc_score
+import numpy as np
+
+iris_test_attrs = np.append(iris_attributes[:20],iris_attributes[88:], axis=0)
+iris_test_target = np.append(iris_target[:20],iris_target[88:])
+
+best_model = clf.best_estimator_
+refit_best_model = clf.best_estimator_.fit(iris_attributes[20:88], iris_target[20:88])
+
+print('best_model roc_auc_score: ', 
+       roc_auc_score(iris_test_target, 
+                     best_model.predict(iris_test_attrs)))
+print('refit_best_model roc_auc_score: ', 
+       roc_auc_score(iris_test_target, 
+                     refit_best_model.predict(iris_test_attrs)))
+
+#%%
+iris_test_target
+best_model.predict(iris_test_attrs)
+#%%
+best_model
+refit_best_model
+#%%
 
