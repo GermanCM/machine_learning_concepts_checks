@@ -1,6 +1,6 @@
 # %%[markdown]
 ## Incremental learning checks
-
+### source: https://github.com/rasbt/python-machine-learning-book-2nd-edition
 # %%[markdown]
 ### Dataset extraction
 import pandas as pd 
@@ -221,7 +221,6 @@ latest_ada_model_partially_refitted = latest_ada_model_partially_refitted.partia
                                                             y_single_sample)
 
 print('coefficients of model trained with 90 percent + 3 samples of the dataset and 30 iters: {}'.format(latest_ada_model_partially_refitted.w_))
-
 
 # %%[markdown]
 ### MI PARTIAL FIT PARECE FUNCIONAR REENTRENÁNDOSE CON CADA MUESTRA ADICIONAL SOBRE EL MODELO YA PRE ENTRENADO CON GRAN PARTE DEL DATASET
