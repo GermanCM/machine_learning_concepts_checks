@@ -1,5 +1,6 @@
 {
     "python.pythonPath": "C:\\Users\\gcabreram\\AppData\\Local\\Continuum\\anaconda3\\python.exe",
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "python.linting.pycodestyleEnabled": false
 }

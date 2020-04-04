@@ -19,14 +19,16 @@
                 "--no-debugger",
                 "--no-reload"
             ],
-            "jinja": true
+            "jinja": true,
+            "justMyCode": false
         },
         {
             "name": "Python: Archivo actual",
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ]
 }
