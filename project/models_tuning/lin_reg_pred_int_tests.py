@@ -56,6 +56,7 @@ yhat_out = yhat[0]
 #%%[markdown]
 ## Ver la diferencia entre el cálculo de esta std donde se toman las diferencias (errores) reales respecto de los valor reales de y: https://machinelearningmastery.com/prediction-intervals-for-machine-learning/
 ## VS el cálculo típico de la std en una distribución, que es respecto del valor medio de los valres: https://en.wikipedia.org/wiki/Standard_deviation
+## “revisar prediction intervals section en mi carpeta libro 'Practical statistics for data scientists'”
 sum_errs = arraysum((y - yhat)**2)
 stdev = sqrt(1/(len(y)-2) * sum_errs)
 # We will use the significance level of 95%, which is 1.96 standard deviations.
