@@ -7,6 +7,7 @@ import pandas as pd
 from sklearn import datasets
 
 ds = datasets.load_iris()
+
 mask_target_not_2 = [(ds['target']==0)|(ds['target']==1)]
 #%%
 features_values_2_D = ds['data'][:, 0:2][mask_target_not_2]
@@ -15,6 +16,9 @@ features_values_2_D = ds['data'][:, 0:2][mask_target_not_2]
 target_values = ds['target'][mask_target_not_2]
 
 #%%
+features_values_2_D = ds.data[:, 0:2]
+target_values = ds.target
+
 X = features_values_2_D
 y = target_values
 
@@ -114,7 +118,8 @@ class AdalineSGD(object):
     
         return cost
 
-    # adaline schema: project\models_tuning\pics\adaline_schema.PNG
+
+  # adaline schema: project\models_tuning\pics\adaline_schema.PNG
 
     def net_input(self, X):
         """Calculate net input"""
@@ -130,6 +135,7 @@ class AdalineSGD(object):
 
         return np.where(self.activation(self.net_input(X))
                         >= 0.0, 1, -1)
+
 
 def calculate_cost(predictions, true_values):
     """ Sum of Squared Error Cost function """
@@ -161,9 +167,24 @@ y = np.where(y == 'Iris-setosa', -1, 1)
 #extract sepal length and petal length
 X = df.iloc[0:100, [0, 2]].values
 
+# %%
+import numpy as np 
+
+
 X_std = np.copy(X)
 X_std[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X_std[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+# %%[markdown]
+# Adaline via SGD fitting:
+ada = AdalineSGD(n_iter=30, eta=0.01, random_state=1)
+ada_model = ada.fit(X_std, y)
+
+# %%[markdown]
+# pesos actuales del modelo
+print('current model weights: {}'.format(ada_model.w_)) 
+
 
 # %%[markdown]
 from matplotlib.colors import ListedColormap
@@ -189,6 +210,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
                     alpha=0.8, c=colors[idx],
                     marker=markers[idx], label=cl,
                     edgecolor='black')
+
 
 # %%[markdown]
 ### Ahora probamos a entrenar el modelo sobre un 90% de los datos con fit, y el 10% de uno en uno con partial_fit
@@ -218,11 +240,19 @@ print('cost on test set with all the dataset and 100 iters: {}'.format(test_cost
 import matplotlib.pyplot as plt 
 
 plot_decision_regions(X_std, y, classifier=ada_model_whole_data)
+
+# %%
+import matplotlib.pyplot as plt
+
+# Plot decision regions
+plot_decision_regions(X_std, y, classifier=ada_model)
+
 plt.title('Adaline - Stochastic Gradient Descent')
 plt.xlabel('sepal length [standardized]')
 plt.ylabel('petal length [standardized]')
 plt.legend(loc='upper left')
 plt.show()
+
 plt.plot(range(1, len(ada_model_whole_data.cost_) + 1), ada_model_whole_data.cost_, marker='o')
 plt.xlabel('Epochs')
 plt.ylabel('Average Cost')
@@ -326,4 +356,56 @@ plt.show()
 ### NO OBSTANTE, PARECE ENTRENARSE MEJOR CUANDO "VE" TODOS LOS DATOS SIMULTÁNEAMENTE
 ### MIRAR ANIMACIÓN DE GRÁFICAS (EVOLUCIÓN DE LA SUPERFICIE DE DECISIÓN) EN STREAMLIT
 
+plt.plot(range(1, len(ada_model.cost_) + 1), ada_model.cost_, marker='o')
+plt.xlabel('Epochs')
+plt.ylabel('Average Cost')
+plt.show()
+
+# %%[markdown]
+## Ahora probamos a entrenar el modelo sobre un 90% de los datos con fit, y el 10% de uno en uno con partial_fit
+
 # %%
+len_90_ = int(0.9*len(X_std))
+X_std_90_ = X_std[:len_90_]
+y_90_ = y[:len_90_]
+
+ada = AdalineSGD(n_iter=30, eta=0.01, random_state=1)
+ada_model = ada.fit(X_std, y)
+print('coefficients with all the dataset and 30 iters: {}'.format(ada_model.w_))
+#%%
+ada = AdalineSGD(n_iter=30, eta=0.01, random_state=1)
+ada_model_90_ = ada.fit(X_std_90_, y_90_)
+print('coefficients of model trained with 90 percent of the dataset and 30 iters: {}'.format(ada_model_90_.w_))
+
+# %%
+index = (len_90_+1) - len_90_
+X_single_sample = X_std[index]
+y_single_sample = y[index]
+
+ada_model_90_partially_refitted = ada_model_90_.partial_fit(X_single_sample, 
+                                                            y_single_sample)
+
+print('coefficients of model trained with 90 percent + 1 sample of the dataset and 30 iters: {}'.format(ada_model_90_.w_))
+# %%
+index = (len_90_+5) - (len_90_+4)
+X_single_sample = X_std[index]
+y_single_sample = y[index]
+
+latest_ada_model_partially_refitted = ada_model_90_partially_refitted.partial_fit(X_single_sample, 
+                                                            y_single_sample)
+
+print('coefficients of model trained with 90 percent + 2 samples of the dataset and 30 iters: {}'.format(latest_ada_model_partially_refitted.w_))
+
+# %%
+index = (len_90_+8) - (len_90_+7)
+X_single_sample = X_std[index]
+y_single_sample = y[index]
+
+latest_ada_model_partially_refitted = latest_ada_model_partially_refitted.partial_fit(X_single_sample, 
+                                                            y_single_sample)
+
+print('coefficients of model trained with 90 percent + 3 samples of the dataset and 30 iters: {}'.format(latest_ada_model_partially_refitted.w_))
+
+# %%[markdown]
+### MI PARTIAL FIT PARECE FUNCIONAR REENTRENÁNDOSE CON CADA MUESTRA ADICIONAL SOBRE EL MODELO YA PRE ENTRENADO CON GRAN PARTE DEL DATASET
+
