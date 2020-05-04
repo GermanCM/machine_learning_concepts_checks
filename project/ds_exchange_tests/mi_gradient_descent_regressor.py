@@ -218,6 +218,12 @@ max_value_t = t+sigma_R
 y_data = min_value_t + (max_value_t - min_value_t) * np.random.rand(n,1)
 x_data=np.array(range(1000))
 
+#%%
+import matplotlib.pyplot as pyplot
+pyplot.scatter(x_data, y_data)
+pyplot.show()
+
+#%%
 final_df_DICT = {'X': x_data}
 H = pd.DataFrame(final_df_DICT)
 feature_matrix = np.zeros(n*2) 
@@ -227,12 +233,50 @@ feature_matrix[:,1] = H['X']
 feature_matrix
 #%%
 #standardize features
-feature_matrix = (feature_matrix - feature_matrix.mean()) / feature_matrix.std()
-target_data = y_data.reshape(len(y_data), )
+#feature_matrix = (feature_matrix - feature_matrix.mean()) / feature_matrix.std()
+#target_data = y_data.reshape(len(y_data), )
+
 #%%
+#x_data_stdardized = (x_data-x_data.mean())/(x_data.std())
+# SEPARATE WAY
+w = [0.1, 0.1]
+L=0.001
+epochs=5
+iteration = 0
+cost=[]
+while iteration < epochs:
+    pred = w[0] + w[1]*x_data.reshape(len(x_data), ) #np.dot(feature_matrix, w)
+    residuals = y_data.reshape(len(y_data), )-pred.reshape(len(pred), )
+    
+    partial_w1 = np.dot(residuals.reshape(len(residuals), ), -x_data.reshape(len(x_data), ))
+    partial_w0 = -np.sum(residuals.reshape(len(residuals), ))
+    w[0] = w[0] - L*partial_w0
+    w[1] = w[1] - L*partial_w1
+    
+    iteration += 1
+    computed_cost = np.sum(np.power((pred - y_data.reshape(len(y_data), )), 2)) / n
+
+    cost.append(computed_cost)
+
+print('coef: {}'.format(w))
+print('cost: {}'.format(cost[-1]))
+
+
+
+
+
+
+
+
+
+
+
+
+#%%
+# MATRIX ALGEBRA WAY:
 w = [0, 0]
 L=0.0001
-epochs=1000
+epochs=10000
 iteration = 0
 cost=[]
 while iteration < epochs:
