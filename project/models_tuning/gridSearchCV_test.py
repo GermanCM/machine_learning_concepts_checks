@@ -6,7 +6,6 @@ from sklearn import svm, datasets
 from sklearn.model_selection import GridSearchCV
 
 iris = datasets.load_iris()
-iris
 
 #%% [markdown]
 # #### Binary target for this example
@@ -80,6 +79,9 @@ print('refit_best_model precision: ',
 # %%
 from sklearn.svm import SVC
 
+iris_attributes_valid = np.append(iris_attributes[:10],iris_attributes[90:], axis=0)
+iris_target_valid = np.append(iris_target[:10],iris_target[90:])
+
 no_tuned_model = SVC(C= 2, kernel= 'rbf') 
 no_tuned_model.fit(iris_attributes_train, iris_target_train)
 print('best_model precision: ', 
@@ -88,6 +90,9 @@ print('best_model precision: ',
 
 # %%
 # y ahora comparo con la precision que me devuelve incluyéndolo como parte del grid search
+from sklearn.metrics import roc_auc_score, precision_score
+import numpy as np
+
 grid_params = {'kernel':('linear', 'rbf'), 'C':[1, 2, 10]}
 scoring_metrics = ['precision'] #, 'roc_auc']
 svc = svm.SVC(gamma="scale")
@@ -96,6 +101,9 @@ iris_attributes_train, iris_target_train = iris_attributes[10:90], iris_target[1
 
 clf = GridSearchCV(estimator=svc, param_grid=grid_params, cv=5, scoring=scoring_metrics, refit='precision')
 clf.fit(iris_attributes_train, iris_target_train)     
+
+#%%
+clf.best_params_
 
 #%%
 clf.cv_results_['mean_test_precision']
