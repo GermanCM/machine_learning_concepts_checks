@@ -5,7 +5,7 @@ from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
 
 def objective(x):
     return {
-        'loss': x ** 3,
+        'loss': x ** 2, #x ** 3,
         'status': STATUS_OK,
         # -- store other results like this
         'eval_time': time.time(),
