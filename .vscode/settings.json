@@ -1,6 +1,7 @@
 {
     "python.pythonPath": "/Users/germancabrera/anaconda3/envs/dbs_anapro_env/bin/python",
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pycodestyleEnabled": false
+    "python.linting.pylintEnabled": false,
+    "python.linting.pycodestyleEnabled": true,
+    "databricks.connection.default.useCodeCells": true
 }
